@@ -10,6 +10,15 @@
   </head>
 
   <body>
+    <!-- <a href="/">Home</a> -->
+    <%= link_to 'Home', root_path %>
+    <%#= link_to 'Home', root_url %>
+    |
+    <!-- <a href="/contacts/new">Contact Us</a> -->
+    <%# `link_to` is a method called view helper that comes with Rails 
+         and it generate <a> tag %>
+    <%= link_to 'Contact Us', contacts_new_path %>
+    <hr>
     <%= yield %>
   </body>
 </html>
