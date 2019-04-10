@@ -18,9 +18,8 @@ class Question < ApplicationRecord
   validates(:title, presence: true, uniqueness: true)
 
   validates(
-    :body,
-    presence: { message: 'must exist' } # ,
-    # length: { miniumum: 10 }
+    :body,  presence: { message: 'must exist' },
+            length: { minimum: 10 }
   )
 
   validates(

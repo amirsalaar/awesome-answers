@@ -15,9 +15,13 @@
     <%#= link_to 'Home', root_url %>
     |
     <!-- <a href="/contacts/new">Contact Us</a> -->
-    <%# `link_to` is a method called view helper that comes with Rails 
+    <%# `link_to` is a method called view helper that comes with Rails
          and it generate <a> tag %>
     <%= link_to 'Contact Us', contacts_new_path %>
+    |
+    <%= link_to 'New Question', new_question_path %>
+    |
+    <%= link_to 'All Questions', questions_path %>
     <hr>
     <%= yield %>
   </body>

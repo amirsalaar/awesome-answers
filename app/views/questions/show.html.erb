@@ -1,0 +1,31 @@
+<h3><%= @question.title %></h3>
+
+<p><%= @question.body %></p>
+
+<div>
+  <small>
+    Asked <%= time_ago_in_words(@question.created_at)  %> ago
+  </small>
+  |
+  <small>
+    Last edited <%= time_ago_in_words(@question.updated_at) %> ago
+  </small>
+  |
+  <small>
+    Seen <%= pluralize(@question.view_count, "time") %>
+  </small>
+</div>
+
+<div>
+  <small>
+    <%= link_to "Edit", edit_question_path(@question.id) %>
+  </small> 
+  |
+  <small>
+    <%= link_to(
+          "Delete", question_path(@question.id),
+          method: :delete,
+          data: { confirm: "Are you sure?"}
+          )%>
+  </small>
+</div>
