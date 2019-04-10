@@ -29,3 +29,48 @@
           )%>
   </small>
 </div>
+
+<section>
+  <h1>Answers</h1>
+
+  <%= form_with(model: [@question, @answer], local: true) do |f| %>
+    <% if @answer.errors.present? %>
+      <p class="form-errors">
+        <%= @answer.errors.full_messages.join(", ") %>
+      </p>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.text_area(
+      :body, cols: 50, rows: 5,
+      placeholder: "What are your thoughts...",
+      class: "form-control"
+      ) %>
+    </div>
+    <%= f.submit "Answer" %>
+  <% end %>
+
+  <hr />
+
+    <ul class="answer-list">
+      <% @answers.each do |answer| %>
+        <li>
+          <p>
+          <%= answer.body %> <br />
+          <small>
+            <%= link_to(
+            "Delete",
+            question_answer_path(@question, answer),
+            method: :delete, data: {
+              confirm: "Are you sure?"
+            }
+            ) %>
+          </small>
+          <small>
+            Answered <%= time_ago_in_words(answer.created_at) %> ago
+          </small>
+        </p>
+        </li>
+      <% end %>
+    </ul>
+</section>
