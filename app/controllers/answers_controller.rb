@@ -7,6 +7,8 @@ class AnswersController < ApplicationController
         # render json: params
         redirect_to question_path(@question)
       else
+        # For the list of answers
+        @answers = @question.answers.order(created_at: :desc)
         render 'questions/show'
       end
     end
@@ -15,7 +17,7 @@ class AnswersController < ApplicationController
         @answer = Answer.find(params[:id])
         @answer.destroy
         redirect_to question_path(@answer.question)
-        end
+    end
         # we could also have obtained the id from the url by @question = params[:question_id] but since we want to change our routes later on it is not recommentded
     private
   
