@@ -22,7 +22,24 @@
     <%= link_to 'New Question', new_question_path %>
     |
     <%= link_to 'All Questions', questions_path %>
+    |
+    <% if user_signed_in? %>
+      Hello <%= current_user.first_name %> |
+      <%= link_to "Logout", session_path, method: :delete, data: {confirm: "are you sure you want to log out?"} %>
+    <% else %>
+      <%= link_to "Login", new_session_path %>
+      |
+      <%= link_to "Sign Up", new_user_path %>
+    <% end %>
+
     <hr>
+
+    <% flash.each do |type, message| %>
+      <div class="flash flash-<%= type %>">
+        <%= message %>
+      </div>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>

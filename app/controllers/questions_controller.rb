@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class QuestionsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :find_question, only: [:show, :edit, :update, :destroy]
 
   def new
@@ -19,6 +20,7 @@ class QuestionsController < ApplicationController
     # # res.send(req.body) in Express
 
     @question = Question.new question_params
+    @question.user = current_user
     if @question.save
       # The redirect_to method is used for telling the
       # browser to make a new request.

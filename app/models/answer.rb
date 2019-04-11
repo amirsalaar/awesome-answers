@@ -1,4 +1,5 @@
 class Answer < ApplicationRecord
+  belongs_to :user
 
   # Rails guide on Associations:
   # https://guides.rubyonrails.org/association_basics.html

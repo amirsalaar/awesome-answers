@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Question < ApplicationRecord
+  belongs_to :user
+
   # This is the Question model. We generated
   # this file with the command:
   # > rails generate model question title:string body:text
