@@ -1,4 +1,4 @@
-class AddViewCountToQuestions < ActiveRecord::Migration[5.2]
+class AddViewToQuestions < ActiveRecord::Migration[5.2]
   # To generate a migration file do:
   # > rails g migration <name-of-migration>
   
