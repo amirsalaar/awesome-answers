@@ -3,8 +3,8 @@ class SessionsController < ApplicationController
     end
   
     def create
-      user = User.find_by_email(params[:email])
-      if user&.authenticate(params[:password])
+      @user = User.find_by_email(params[:email])
+      if @user&.authenticate(params[:password])
       # Equivalent to:
       # if user && user.authenticate(params[:password])
         # The 'session' is an object useable  in
@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
         # encrypted data. To sign in a user, we store
         # their user_id in the session for later
         # retrieval
-        session[:user_id] = user.id
+        session[:user_id] = @user.id
         redirect_to root_path, notice: "Logged in"
         # render json: session
       else

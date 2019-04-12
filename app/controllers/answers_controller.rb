@@ -18,8 +18,15 @@ class AnswersController < ApplicationController
   
     def destroy
         @answer = Answer.find(params[:id])
-        @answer.destroy
-        redirect_to question_path(@answer.question)
+        if can?(:crud, @answer)
+          @answer.destroy
+          redirect_to question_path(@answer.question)
+        else
+          # head will send an empty HTTP response with a particular reponse code
+          # in this case :unauthorized code is 401
+          # http://billpatrianakos.me/blog/2013/10/13/list-of-rails-status-code-symbols/
+          head :unauthorized
+        end
     end
         # we could also have obtained the id from the url by @question = params[:question_id] but since we want to change our routes later on it is not recommentded
     private

@@ -19,6 +19,7 @@
 </div>
 
 <div>
+  <% if can?(:crud, @question) %>
   <small>
     <%= link_to "Edit", edit_question_path(@question.id) %>
   </small> 
@@ -30,7 +31,9 @@
           data: { confirm: "Are you sure?"}
           )%>
   </small>
+  <% end %>
 </div>
+
 
 <section>
   <h1>Answers</h1>
@@ -59,6 +62,7 @@
         <li>
           <p>
           <%= answer.body %> <br />
+          <% if can?(:crud, answer) %>
           <small>
             <%= link_to(
             "Delete",
@@ -68,6 +72,7 @@
             }
             ) %>
           </small>
+          <% end %>
           <small>
             Answered <%= time_ago_in_words(answer.created_at) %> ago
           </small>
