@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-    has_many :questions, dependent: :nullify
-    has_many :answers, dependent: :nullify
+  has_many :questions, dependent: :nullify
+  has_many :answers, dependent: :nullify
   
   has_secure_password
   # Provides user authentication features on the model

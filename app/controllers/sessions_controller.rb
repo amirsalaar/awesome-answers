@@ -14,6 +14,7 @@ class SessionsController < ApplicationController
         # retrieval
         session[:user_id] = user.id
         redirect_to root_path, notice: "Logged in"
+        # render json: session
       else
         flash[:alert] = "Wrong email or password"
         render :new
