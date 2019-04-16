@@ -45,9 +45,9 @@ class QuestionsController < ApplicationController
   end
 
   def edit
-    if !can?(:edit, @question)
-      redirect_to root_path, alert: 'Not Authorized'
-    end
+    # if !can?(:edit, @question)
+    #   redirect_to root_path, alert: 'Not Authorized'
+    # end
   end
 
   def update
