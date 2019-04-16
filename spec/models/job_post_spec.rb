@@ -7,6 +7,16 @@ require 'rails_helper'
 # > rspec -f d
 RSpec.describe JobPost, type: :model do
 
+  # To get a list of all possible matchers for tests
+  # go to:
+  # https://relishapp.com/rspec/rspec-expectations/docs/built-in-matchers
+
+  def job_post
+    @job_post ||= JobPost.new(
+      title: "Awesome Job",
+      description: "Some valid job description"
+    )
+  end
   # The "describe" is used to group related tests
   # together. It is primarily used as an organizational
   # tool. All of the grouped tests should be written
@@ -15,7 +25,8 @@ RSpec.describe JobPost, type: :model do
     it("requires a title") do
       # GIVEN
       # An instance of a JobPost (without a title)
-      job_post = JobPost.new
+      jp = job_post
+      jp.title = nil
 
       # WHEN
       # Validations are triggered (or WHEN we attempt to save the JobPost)
@@ -27,6 +38,14 @@ RSpec.describe JobPost, type: :model do
        # The following will pass the test if the
        # errors.messages hash has a key named :title.
        # This only occurs if a 'title' validation fails.
+
+
+       # Use the "expect" method instead of "assert_*"
+       # to write assertions. It takes a single
+       # argument which is actual value or the one to
+       # be tested. We call the "to" method on the
+       # object returns with a matcher to perform the
+       # verification of the value.
        expect(job_post.errors.messages).to(have_key(:title))
     end
 
@@ -40,12 +59,33 @@ RSpec.describe JobPost, type: :model do
       # THEN
       expect(jp.errors.messages).to(have_key(:title))
       expect(jp.errors.messages[:title]).to(include("has already been taken"))
-      # To get a list of all possible matchers for tests
-      # go to:
-      # https://relishapp.com/rspec/rspec-expectations/docs/built-in-matchers
     end
+  end
 
+  # As per ruby docs, methods that are described with
+  # a '.' are class methods. Those that are described
+  # with a '#' in front are instance methods
+  describe ".search" do
+    it("returns only job posts containing the search term, regardless of case") do
+      # GIVEN
+      # 3 job posts in database
+      job_post_a = JobPost.create(
+        title: "Software Engineer"
+      )
+      job_post_b = JobPost.create(
+        title: "Programmer"
+      )
+      job_post_c = JobPost.create(
+        title: "software architect"
+      )
+      # WHEN
+      # We search for 'software'
+      results = JobPost.search('software')
 
+      # THEN
+      # JobPost A & C are returned
+      expect(results).to(eq([job_post_a, job_post_c]))
+    end
   end
 
 end
