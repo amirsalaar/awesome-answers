@@ -12,10 +12,11 @@ RSpec.describe JobPost, type: :model do
   # https://relishapp.com/rspec/rspec-expectations/docs/built-in-matchers
 
   def job_post
-    @job_post ||= JobPost.new(
-      title: "Awesome Job",
-      description: "Some valid job description"
-    )
+    # @job_post ||= JobPost.new(
+    #   title: "Awesome Job",
+    #   description: "Some valid job description"
+    # )
+    @job_post ||= FactoryBot.build(:job_post)
   end
   # The "describe" is used to group related tests
   # together. It is primarily used as an organizational
@@ -52,8 +53,15 @@ RSpec.describe JobPost, type: :model do
     it 'requires a unique title' do
       # GIVEN: one job post in the db and one instance
       # of job post with the same title:
-      persisted_jp = JobPost.create(title: "Full Stack Developer")
-      jp = JobPost.new(title: persisted_jp.title)
+      persisted_jp = FactoryBot.create(
+        :job_post,
+        title: "Full Stack Developer"
+      )
+
+      jp = FactoryBot.build(
+        :job_post,
+        title: persisted_jp.title
+      )
       # WHEN
       jp.valid?
       # THEN
@@ -69,13 +77,16 @@ RSpec.describe JobPost, type: :model do
     it("returns only job posts containing the search term, regardless of case") do
       # GIVEN
       # 3 job posts in database
-      job_post_a = JobPost.create(
+      job_post_a = FactoryBot.create(
+        :job_post,
         title: "Software Engineer"
       )
-      job_post_b = JobPost.create(
+      job_post_b = FactoryBot.create(
+        :job_post,
         title: "Programmer"
       )
-      job_post_c = JobPost.create(
+      job_post_c = FactoryBot.create(
+        :job_post,
         title: "software architect"
       )
       # WHEN
