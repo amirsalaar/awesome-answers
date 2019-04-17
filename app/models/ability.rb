@@ -37,6 +37,10 @@ class Ability
     can :crud, Answer do |ans|
       ans.user == user || ans.question.user == user
     end
+
+    can :crud, JobPost do |job_post|
+      job_post.user == user
+    end
     
     # The first argument to `can` is the action you are giving the user
     # permission to do.
