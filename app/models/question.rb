@@ -1,8 +1,8 @@
-# frozen_string_literal: true
-
 class Question < ApplicationRecord
+  has_many :likes, dependent: :destroy
+  has_many :likers, through: :likes, source: :user
+  
   belongs_to :user
-
   # This is the Question model. We generated
   # this file with the command:
   # > rails generate model question title:string body:text
@@ -50,24 +50,28 @@ class Question < ApplicationRecord
   # answers.reload
 
 
-  
 
   # Create validations by using the 'validates' method.
   # The arguments are (in order):
   # - A column name as a symbol
   # - Named arguments, corresponding to the validation
   # rules
+
+  # To read more on validations: https://guides.rubyonrails.org/active_record_validations.html
+
+  #        Column Name   Validation        Validation
+  #           ð          ð                  ð
   validates(:title, presence: true, uniqueness: true)
 
   validates(
-    :body,  presence: { message: 'must exist' },
+    :body,  presence: { message: "must exist" },
             length: { minimum: 10 }
   )
 
   validates(
     :view_count, numericality: {
-      greater_than_or_equal_to: 0
-    }
+       greater_than_or_equal_to: 0
+     }
   )
 
   # Custom Validation
@@ -84,6 +88,7 @@ class Question < ApplicationRecord
   # the appropriate time.
   before_validation(:set_default_view_count)
 
+
   # Create a scope with a class method
   # Scopes are such a commonly used feature, that there
   # is a way to crreate them quicker. It takes a name
@@ -94,7 +99,11 @@ class Question < ApplicationRecord
   #   order(created_at: :desc).limit(10)
   # end
 
-  Question.recent
+  # def self.search(query)
+  #   where("title ILIKE ? OR body ILIKE ?", "%#{query}%", "%#{query}%")
+  # end
+  # is equivalent to:
+  scope(:search, ->(query) { where("title ILIKE ? OR body ILIKE ?", "%#{query}%", "%#{query}%") })
 
   private
 
@@ -103,13 +112,13 @@ class Question < ApplicationRecord
     # like the . operator to call methods on an object.
     # If the method doesnt exist for the object, 'nil'
     # will be returned instead of getting an error.
-    if body&.downcase&.include?('monkey')
+    if body&.downcase&.include?("monkey")
       # To make a record invalid, you must add a
       # validation error using the errors `add` method.
       # It's arguments are (in order):
       #  - A symbol for the invalid column
       #  - An error message as a String.
-      errors.add(:body, 'must not have monkeys')
+      errors.add(:body, "must not have monkeys")
     end
   end
 

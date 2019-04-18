@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     # In this case all nested routes will be
     # prefixed with '/questions/:question_id/'
     resources :answers, only: [:create, :destroy]
-
+    resources :likes, only: [:create, :destroy]
   end
   # get('/questions/new', to: 'questions#new', as: :new_question)
   # post('/questions', to: 'questions#create', as: :questions)

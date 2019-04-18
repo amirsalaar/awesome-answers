@@ -8,6 +8,6 @@ FactoryBot.define do
     # especially useful when dealing with a column that
     # has uniqueness validation.
     sequence(:email) {|n| Faker::Internet.email.sub("@", "-#{n}@")}
-    password {"supersecret"}    
+    password {"supersecret"}
   end
 end

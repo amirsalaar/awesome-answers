@@ -1,6 +1,20 @@
-# frozen_string_literal: true
-
 class User < ApplicationRecord
+
+  has_many :likes, dependent: :destroy
+  #          ð
+  #          \--------------------------\
+  #                                     ð
+  has_many :liked_questions, through: :likes, source: :question
+  # `has_many` can take a `through` named argument to create a
+  # many-to-many relationship via another `has_many` declaration.
+
+  # We specify the name of another `has_many` with the `through`
+  # option which corresponds to the join table between
+  # the two tables that share the many-to-many relationship.
+
+  # We must also provide a `source` named argument to specify
+  # which model we're getting back from the many-to-many relationship.
+
   has_many :questions, dependent: :nullify
   has_many :answers, dependent: :nullify
 
@@ -22,17 +36,14 @@ class User < ApplicationRecord
   # will return false.
   # - The attr_accessor 'password_confirmation' is
   # optional. But, if it is present, a validation
-  # will verify that it is identical to the 'password'
-  # attr_accessor
-
-  # For more details:
+   # will verify that it is identical to the 'password'
+   # attr_accessor
+   # For more details:
    # http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html#method-i-has_secure_password
 
-  validates :email, presence: true, uniqueness: true, format: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
-
+  validates(:email, presence: true, uniqueness: true, format: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i)
 
   def full_name
     "#{first_name} #{last_name}".strip
   end
-  
 end

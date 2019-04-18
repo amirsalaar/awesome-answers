@@ -6,7 +6,7 @@
 class Ability
   include CanCan::Ability
 
-  # CanCanCan assumes you have a method called `current_user` in available in your 
+  # CanCanCan assumes you have a method called `current_user` in available in your
   # ApplictionController (which we do). CanCanCan gets automatically initialized
   # with `current_user` passed to the `initialize` method
   def initialize(user)
@@ -15,8 +15,8 @@ class Ability
 
     # Define abilities for the passed in user here. For example:
     #
-    
-    
+
+
     user ||= User.new # guest user (not logged in)
 
     #   if user.admin?
@@ -68,6 +68,13 @@ class Ability
       ans.user == user || ans.question.user == user
     end
 
+    can :crud, JobPost do |job_post|
+      job_post.user == user
+    end
+
+    can :like, Question do |question|
+      user.persisted? && question.user != user
+    end
     # The first argument to `can` is the action you are giving the user
     # permission to do.
     # If you pass :manage it will apply to every action. Other common actions
