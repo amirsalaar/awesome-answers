@@ -30,12 +30,30 @@
     <%= form.text_area :body %>
   </div>
   <div>
-    <%= form.collection_check_boxes :tag_ids, Tag.all, :id, :name do |b| %>
-      <div class="tag-wrapper">
-        <%= b.check_box %>
-        <%= b.text.humanize %>
-      </div>
-    <% end %>
+    <%= form.label :tag_names %>
+    <%= form.text_field :tag_names %>
+    <%#= form.collection_check_boxes :tag_ids, Tag.all, :id, :name do |b| %>
+      <!-- <div class="tag-wrapper">
+        <%#= b.check_box %>
+        <%#= b.text.humanize %>
+      </div> -->
+    <%# end %>
   </div>
   <%= form.submit %>
 <% end %>
+
+<script>
+  $("#question_tag_names").selectize({
+    delimiter: ',',
+    persist: false,
+    labelField: "name",
+    valueField: "name",
+    searchField: "name",
+    options: <%= Tag.select(:name).to_json(except: [:id]).html_safe %>,
+    create (input) {
+      return {
+        name: input
+      }
+    }
+  });
+</script>

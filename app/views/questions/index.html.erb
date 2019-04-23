@@ -1,5 +1,13 @@
 <h1>Questions</h1>
 
+<% if @tag.present? %>
+  <h6>
+    Showing questions tagged by
+    <span class= "badge badge-pill badge-primary">
+      <%= @tag.name %>
+    </span>
+  </h6>
+<% end %>
 
 <ul class="question-list">
   <% @questions.each do |question| %>

@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery3
+//= require selectize
 //= require rails-ujs
 //= require activestorage
 //= require_tree .

@@ -5,7 +5,7 @@ class Question < ApplicationRecord
   has_many :tags, through: :taggings#, source: :tag
   # If the name of the association (i.e. tags) is the
   # same as the source singularized (i.e. tag), the source
-  # named argument can be omitted. 
+  # named argument can be omitted.
 
   belongs_to :user
   # This is the Question model. We generated
@@ -109,6 +109,30 @@ class Question < ApplicationRecord
   # end
   # is equivalent to:
   scope(:search, ->(query) { where("title ILIKE ? OR body ILIKE ?", "%#{query}%", "%#{query}%") })
+
+
+  def tag_names
+    self.tags.map{ |t| t.name }.join(", ")
+  end
+
+  # Appending = at the end of a method name, allows us
+  # to implement a setter. A setter is a method that is
+  # assignable. i.e.
+
+  # q.tag_names = "stuff, whatever"
+
+  # The code in the example above would call the method
+  # we wrote below, where the value to the right hand side
+  # of the '=' would become the argument to the method.
+  def tag_names=(rhs)
+    self.tags = rhs.strip.split(/\s*,\s*/).map do |tag_name|
+      # Finds the first record with given
+      # attributes, or initializes a record
+      # (Tag.new) with attributes if one is
+      # not found.
+      Tag.find_or_initialize_by(name: tag_name)
+    end
+  end
 
   private
 
