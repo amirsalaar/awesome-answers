@@ -3,7 +3,13 @@
 <p><%= @question.body %></p>
 
 <h4>Created by: <%= @question.user&.full_name || 'DELETED' %></h4>
-
+<p>
+  Tags: <%= @question.tags.map{ |t| t.name }.join(", ") %>
+  <%#= The second line below is equivalent to the line above.
+  Passing &:name to any enumerable method will call .name
+  on each element %>  
+  <%#= @question.tags.map(&:name).join(", ") %>
+</p>
 <div>
   <small>
     Asked <%= time_ago_in_words(@question.created_at)  %> ago

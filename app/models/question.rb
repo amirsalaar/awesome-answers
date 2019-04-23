@@ -1,7 +1,12 @@
 class Question < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :likers, through: :likes, source: :user
-  
+  has_many :taggings, dependent: :destroy
+  has_many :tags, through: :taggings#, source: :tag
+  # If the name of the association (i.e. tags) is the
+  # same as the source singularized (i.e. tag), the source
+  # named argument can be omitted. 
+
   belongs_to :user
   # This is the Question model. We generated
   # this file with the command:

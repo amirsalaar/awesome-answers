@@ -73,7 +73,7 @@ class QuestionsController < ApplicationController
 
     # Then use permit to specify all input names that
     # are allowable (as symbols).
-    question_params = params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, tag_ids: [])
 
   end
 
