@@ -8,7 +8,8 @@ class AnswersController < ApplicationController
       @answer.user = current_user
       if @answer.save
         # render json: params
-        AnswerMailer.new_answer(@answer).deliver_now
+        # AnswerMailer.new_answer(@answer).deliver_now
+        AnswerMailer.new_answer(@answer).deliver_later(wait: 5.seconds)
         redirect_to question_path(@question)
       else
         # For the list of answers

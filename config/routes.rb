@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  match(
+    "/delayed_job",
+    to: DelayedJobWeb,
+    anchor: false,
+    via: [:get, :post]
+  )
+  
   resources :job_posts, only: [:new, :create, :show, :destroy]
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
