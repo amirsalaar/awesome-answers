@@ -35,7 +35,8 @@ Rails.application.configure do
   # The above setting should be set to `true` otherwise
   # all of your mail will fail silently. If you mail is
   # not properly setup with Google, you will not know about it.
-  config.action_mailer.delivery_method = :letter_opener
+  # config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.default_url_options = {
     host: "localhost:3000"

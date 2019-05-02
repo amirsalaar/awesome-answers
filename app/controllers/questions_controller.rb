@@ -39,6 +39,11 @@ class QuestionsController < ApplicationController
     # For the list of answers
     @answers = @question.answers.order(created_at: :desc)
     @like = @question.likes.find_by(user: current_user)
+
+    respond_to do |format|
+      format.html { render }
+      format.json { render json: @question }
+    end
   end
 
   def index

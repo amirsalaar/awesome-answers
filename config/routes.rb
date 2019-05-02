@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  # GET /api/v1/questions -> questions#index
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :questions
+      resource :session, only: [:create, :destroy]
+    end
+  end
+
   match(
     "/delayed_job",
     to: DelayedJobWeb,

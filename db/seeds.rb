@@ -20,7 +20,7 @@ User.delete_all
 super_user = User.create(
   first_name: "Jon",
   last_name: "Snow",
-  email: "a@a.com",
+  email: "js@winterfell.gov",
   password: PASSWORD
 )
 
