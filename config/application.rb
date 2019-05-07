@@ -44,7 +44,7 @@ module AwesomeAnswers
         # "origins" method specifies which domains are allowed
         # to make AJAX requests to this server.
         # "*" means all domains and should be avoided.
-        origins("*")
+        origins("localhost:3030")
 
         resource(
           # Only routes that begin with /api/ are accessible
@@ -52,6 +52,9 @@ module AwesomeAnswers
           "/api/*",
           # Which HTTP headers can be sent in a request.
           headers: :any,
+          # Allow sharing of cookies for CORS requests
+          # made to this resources
+          credentials: true,
           # Which HTTP verbs are allowed in a request.
           methods: [:get, :post, :delete, :patch, :put, :option]
         )
