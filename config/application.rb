@@ -39,5 +39,23 @@ module AwesomeAnswers
       g.assets = false
     end
 
+    config.middleware.insert_before(0, Rack::Cors) do
+      allow do
+        # "origins" method specifies which domains are allowed
+        # to make AJAX requests to this server.
+        # "*" means all domains and should be avoided.
+        origins("*")
+
+        resource(
+          # Only routes that begin with /api/ are accessible
+          # with AJAX
+          "/api/*",
+          # Which HTTP headers can be sent in a request.
+          headers: :any,
+          # Which HTTP verbs are allowed in a request.
+          methods: [:get, :post, :delete, :patch, :put, :option]
+        )
+      end
+    end
   end
 end
