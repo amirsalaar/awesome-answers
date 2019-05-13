@@ -4,6 +4,14 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :questions
       resource :session, only: [:create, :destroy]
+      resources :users, only: [] do
+        # /api/v1/users/current
+        get :current, on: :collection
+        # default
+        # /api/v1/users/:id/current
+        # on: :member
+        # /api/v1/users/:user_id/current
+      end
     end
   end
 
