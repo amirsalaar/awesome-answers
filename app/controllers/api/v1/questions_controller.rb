@@ -24,20 +24,28 @@ class Api::V1::QuestionsController < Api::ApplicationController
       include: [ :author, {answers: [ :author ]} ]
     )
   end
-
+  
   def create
     question = Question.new question_params
     question.user = current_user
 
-    if question.save
-      render json: { id: question.id }
-    else
-      render(
-        json: { errors: question.errors.messages },
-        status: 422 # Unprocessable Entity
-      )
-    end
+    question.save!
+    render json: { id: question.id }
   end
+
+      # def create
+      #   question = Question.new question_params
+      #   question.user = current_user
+
+      #   if question.save
+      #     render json: { id: question.id }
+      #   else
+      #     render(
+      #       json: { errors: question.errors.messages },
+      #       status: 422 # Unprocessable Entity
+      #     )
+      #   end
+      # end
 
   private
   def find_question
