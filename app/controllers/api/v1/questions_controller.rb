@@ -1,6 +1,6 @@
 class Api::V1::QuestionsController < Api::ApplicationController
-  before_action :authenticate_user!, only: [ :create ]
-  before_action :find_question, only: [ :show ]
+  before_action :authenticate_user!, only: [ :create, :update ]
+  before_action :find_question, only: [ :show, :update ]
 
   def index
     questions = Question.order(created_at: :desc)
@@ -46,6 +46,10 @@ class Api::V1::QuestionsController < Api::ApplicationController
       #     )
       #   end
       # end
+  def update
+    @question.update!(question_params)
+    render json: { id: question.id}
+  end
 
   private
   def find_question
