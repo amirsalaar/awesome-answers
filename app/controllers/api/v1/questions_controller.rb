@@ -1,6 +1,6 @@
 class Api::V1::QuestionsController < Api::ApplicationController
   before_action :authenticate_user!, only: [ :create, :update ]
-  before_action :find_question, only: [ :show, :update ]
+  before_action :find_question, only: [ :show, :update, :destroy ]
 
   def index
     questions = Question.order(created_at: :desc)
@@ -30,7 +30,7 @@ class Api::V1::QuestionsController < Api::ApplicationController
     question.user = current_user
 
     question.save!
-    render json: { id: question.id }
+    render json: { id: question.id , status: 201 }, status: 201
   end
 
       # def create
@@ -48,7 +48,12 @@ class Api::V1::QuestionsController < Api::ApplicationController
       # end
   def update
     @question.update!(question_params)
-    render json: { id: question.id}
+    render json: { id: @question.id}
+  end
+
+  def destroy
+    @question.destroy
+    render json: { status: 200 }, status: 200
   end
 
   private

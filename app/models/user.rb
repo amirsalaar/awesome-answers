@@ -1,4 +1,16 @@
 class User < ApplicationRecord
+  # To setup attachments or uploads, first generate
+  # a migration to create tables needed by
+  # ActiveStorage:
+  # rails active_storage:install
+
+  # Then, run your migration.
+
+  # To support multiple file attachements, do:
+  has_many_attached :avatars
+
+  # To support a single file attachement, do:
+  # has_one_attached :avatar
 
   has_many :likes, dependent: :destroy
   #          ð

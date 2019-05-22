@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :questions
       resource :session, only: [:create, :destroy]
-      resources :users, only: [:create] do
+      resources :users, only: [:create, :update] do
         # /api/v1/users/current
         get :current, on: :collection
         # default
