@@ -2,7 +2,9 @@
 
 <p><%= @question.body %></p>
 
-<h4>Created by: <%= @question.user&.full_name || 'DELETED' %></h4>
+<h4>
+  Created by: <%= link_to @question.user&.full_name || 'DELETED', @question.user %>
+</h4>
 
 <% unless @question.tags.empty? %>
   <div>
@@ -60,20 +62,18 @@
 
 <div>
   <% if can?(:crud, @question) %>
-  <small>
-    <%= link_to "Edit", edit_question_path(@question.id) %>
-  </small> 
-  |
-  <small>
-    <%= link_to(
-          "Delete", question_path(@question.id),
-          method: :delete,
-          data: { confirm: "Are you sure?"}
-          )%>
-  </small>
+    <small>
+      <%= link_to "Edit", edit_question_path(@question) %>
+    </small> |
+    <small>
+      <%= link_to(
+            "Delete", question_path(@question),
+            method: :delete,
+            data: { confirm: "Are you sure?"}
+            )%>
+    </small>
   <% end %>
 </div>
-
 
 <section>
   <h1>Answers</h1>
@@ -103,15 +103,15 @@
           <p>
           <%= answer.body %> <br />
           <% if can?(:crud, answer) %>
-          <small>
-            <%= link_to(
-            "Delete",
-            question_answer_path(@question, answer),
-            method: :delete, data: {
-              confirm: "Are you sure?"
-            }
-            ) %>
-          </small>
+            <small>
+              <%= link_to(
+              "Delete",
+              question_answer_path(@question, answer),
+              method: :delete, data: {
+                confirm: "Are you sure?"
+              }
+              ) %>
+            </small>
           <% end %>
           <small>
             Answered <%= time_ago_in_words(answer.created_at) %> ago

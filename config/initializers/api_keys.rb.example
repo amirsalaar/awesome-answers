@@ -1,0 +1,4 @@
+ENV["EMAIL_USERNAME"] = "Add Gmail Username here"
+ENV["EMAIL_PASSWORD"] = "Add your Gmail password here"
+ENV['STRIPE_PUBLISHABLE_KEY'] = "Add Stripe publishable key here"
+ENV['STRIPE_SECRET_KEY'] = "Add Stripe secret key here"

@@ -5,13 +5,12 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <script src="https://js.stripe.com/v3/"></script>
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
   </head>
 
   <body>
-
-  <header>
     <!-- <a href="/">Home</a> -->
     <%= link_to 'Home', root_path %>
     <%#= link_to 'Home', root_url %>
@@ -33,19 +32,14 @@
       |
       <%= link_to "Sign Up", new_user_path %>
     <% end %>
-  </header>
-
-  <hr>
-
-  <div class="container">
-    <% flash.each do |type, message| %>
-      <div class="flash flash-<%= type %>">
-        <%= message %>
-      </div>
-    <% end %>
-
-    <%= yield %>
-  </div>
-
+    <hr>
+    <div class="container">
+      <% flash.each do |type, message| %>
+        <div class="flash flash-<%= type %>">
+          <%= message %>
+        </div>
+      <% end %>
+      <%= yield %>
+    </div>
   </body>
 </html>

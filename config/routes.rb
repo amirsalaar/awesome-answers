@@ -1,5 +1,17 @@
 Rails.application.routes.draw do
+  resources :users, shallow: true, only: [:new, :create, :show] do
+    # The shallow:true named argument will seperate routes
+    # that require the parent from ones that don't.
+    # Routes that require the parent (e.g. index, new, create)
+    # will not change.
+    # Routes that don't require the parent (e.g. show, edit, update, destroy) will have the parent prefix removed
+    # (e.g. /users/:user_id)
+    resources :gifts, only: [:new, :create] do
+      resources :payments, only: [:new, :create]
+    end
+  end
   # GET /api/v1/questions -> questions#index
+
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :questions
@@ -21,7 +33,7 @@ Rails.application.routes.draw do
     anchor: false,
     via: [:get, :post]
   )
-  
+
   resources :job_posts, only: [:new, :create, :show, :destroy]
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
@@ -33,8 +45,6 @@ Rails.application.routes.draw do
   # :id wildcard. When using a singular resouce
   # the controller name must still be plural.
   resource :session, only: [:new, :create, :destroy]
-
-  resources :users, only: [:create, :new]
   # resources method will generate all CRUD routes
   # following RESTful conventions for a resource.
   # It will assume there is a controller named after

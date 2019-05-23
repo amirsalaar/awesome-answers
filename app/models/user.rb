@@ -30,6 +30,9 @@ class User < ApplicationRecord
   has_many :questions, dependent: :nullify
   has_many :answers, dependent: :nullify
 
+  # has_many :sent_gifts, class_name: 'Gift', foreign_key: :sender_id, dependent: :nullify
+  # has_many :received_gifts, class_name: 'Gift', foreign_key: :receiver_id, dependent: :nullify
+  
   has_secure_password
   # Provides user authentication features on the model
   # that it is called in. It requires a column named
